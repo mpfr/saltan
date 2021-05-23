@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<!-- This is an automatically generated file.  Do not edit.
+   Copyright (c) 2021 Matthias Pressfreund
+  
+   Permission to use, copy, modify, and distribute this software for any
+   purpose with or without fee is hereby granted, provided that the above
+   copyright notice and this permission notice appear in all copies.
+  
+   THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+   WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+   MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+   ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+   WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+   ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+   OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+   -->
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="mandoc.css" type="text/css" media="all"/>
+  <title>SALTAN(8)</title>
+</head>
+<body>
+<table class="head">
+  <tr>
+    <td class="head-ltitle">SALTAN(8)</td>
+    <td class="head-vol">System Manager's Manual</td>
+    <td class="head-rtitle">SALTAN(8)</td>
+  </tr>
+</table>
+<div class="manual-text">
+<section class="Sh">
+<h1 class="Sh" id="NAME"><a class="permalink" href="#NAME">NAME</a></h1>
+<p class="Pp"><code class="Nm">saltan</code> &#x2014;
+    <span class="Nd"><a class="permalink" href="#s"><b class="Sy" id="s">s</b></a><span class="No">shd</span>
+    <b class="Sy">a</b><span class="No">uthentication</span>
+    <a class="permalink" href="#l"><b class="Sy" id="l">l</b></a><span class="No">og</span>
+    <a class="permalink" href="#t"><b class="Sy" id="t">t</b></a><span class="No">rack</span>
+    <b class="Sy">a</b><span class="No">nd</span>
+    <a class="permalink" href="#n"><b class="Sy" id="n">n</b></a><span class="No">otify
+    for</span>
+    <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a></span></p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="SYNOPSIS"><a class="permalink" href="#SYNOPSIS">SYNOPSIS</a></h1>
+<table class="Nm">
+  <tr>
+    <td><code class="Nm">saltan</code></td>
+    <td>[<code class="Fl">-c</code> <var class="Ar">path</var>]</td>
+  </tr>
+</table>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="DESCRIPTION"><a class="permalink" href="#DESCRIPTION">DESCRIPTION</a></h1>
+<p class="Pp"><code class="Nm">saltan</code> monitors the
+    <a class="Xr" href="http://man.openbsd.org/sshd.8">sshd(8)</a>
+    authentication log file and instantly notifies
+    <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a> when it
+    detects accepted and/or rejected authentication attempts. To this end, it
+    follows an extendable modular approach and executes a configurable set of
+    evaluation modules on each new entry in the authentication log file.</p>
+<p class="Pp">The options are as follows:</p>
+<dl class="Bl-tag">
+  <dt id="c"><a class="permalink" href="#c"><code class="Fl">-c</code></a>
+    <var class="Ar">path</var></dt>
+  <dd>Specifies the <var class="Ar">path</var> to an alternative
+      <code class="Nm">saltan</code> configuration file.</dd>
+</dl>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="CONFIGURATION"><a class="permalink" href="#CONFIGURATION">CONFIGURATION</a></h1>
+<p class="Pp"><code class="Nm">saltan</code> reads its configuration either from
+    the default configuration file
+    <span class="Pa">/etc/saltan/saltan.conf</span> or from the path specified
+    with the <code class="Fl">-c</code> command line option.</p>
+<p class="Pp">The following configuration options are accepted:</p>
+<dl class="Bl-tag">
+  <dt id="logfile"><a class="permalink" href="#logfile"><code class="Ic">logfile</code></a>
+    <var class="Ar">path</var></dt>
+  <dd>Specifies the <var class="Ar">path</var> to the
+      <a class="Xr" href="http://man.openbsd.org/sshd.8">sshd(8)</a>
+      authentication log file. Defaults to
+      <span class="Pa">/var/log/authlog</span>.</dd>
+  <dt id="pftbld"><a class="permalink" href="#pftbld"><code class="Ic">pftbld</code></a>
+    <var class="Ar">path</var></dt>
+  <dd>Specifies the <var class="Ar">path</var> to the
+      <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a> binary.
+      Defaults to <span class="Pa">/usr/local/sbin/pftbld</span>.</dd>
+  <dt id="acceptsock"><a class="permalink" href="#acceptsock"><code class="Ic">acceptsock</code></a>
+    |
+    <a class="permalink" href="#rejectsock"><code class="Ic" id="rejectsock">rejectsock</code></a>
+    <var class="Ar">socket</var> |
+    <a class="permalink" href="#none"><code class="Ic" id="none">none</code></a></dt>
+  <dd>Specifies the
+      <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a>-related
+      UNIX-domain <var class="Ar">socket</var> to be notified in the event of an
+      accepted or rejected authentication attempt. Defaults to
+      <code class="Ic">none</code> which disables detection of corresponding
+      authentication events. At least one of the two options needs to be
+      defined.</dd>
+  <dt id="acceptdir"><a class="permalink" href="#acceptdir"><code class="Ic">acceptdir</code></a>
+    |
+    <a class="permalink" href="#rejectdir"><code class="Ic" id="rejectdir">rejectdir</code></a>
+    <var class="Ar">path</var></dt>
+  <dd>Specifies the <var class="Ar">path</var> to an evaluation module family's
+      home directory. Defaults to <span class="Pa">/etc/saltan/accept</span> and
+      <span class="Pa">/etc/saltan/reject</span>, respectively.</dd>
+  <dt id="acceptmods"><a class="permalink" href="#acceptmods"><code class="Ic">acceptmods</code></a>
+    |
+    <a class="permalink" href="#rejectmods"><code class="Ic" id="rejectmods">rejectmods</code></a>
+    <var class="Ar">name ...</var></dt>
+  <dd>Specifies a whitespace-separated list of module file names, located under
+      <code class="Ic">acceptdir</code> / <code class="Ic">rejectdir</code>, and
+      executed in the order of appearance to detect authentication events.
+      Modules are activated only if the corresponding
+      <code class="Ic">acceptsock</code> / <code class="Ic">rejectsock</code> is
+      specified as well.</dd>
+</dl>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="MODULES"><a class="permalink" href="#MODULES">MODULES</a></h1>
+<p class="Pp">On startup, <code class="Nm">saltan</code> sources evaluation
+    modules specified in the configuration file. Each module consists of a short
+    <a class="Xr" href="http://man.openbsd.org/ksh.1">ksh(1)</a> script snippets
+    and serves the following purposes:</p>
+<ol class="Bl-enum Bd-indent Bl-compact">
+  <li>Detect whether a new entry in the
+      <a class="Xr" href="http://man.openbsd.org/sshd.8">sshd(8)</a>
+      authentication log shall be considered a relevant authentication event and
+      pass further treatment or if it should be simply ignored.</li>
+  <li>Extract relevant information (e.g. the client's IP address) from the log
+      entry message.</li>
+  <li>Build and return the notification message <code class="Nm">saltan</code>
+      should send to
+      <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a>.</li>
+</ol>
+<p class="Pp"><code class="Nm">saltan</code> includes a set of ready-to-use
+    modules providing base functionality which may be adapted for individual
+    requirements or used as templates to handle other content.</p>
+<p class="Pp">When modifying existing modules or writing new ones, the following
+    aspects should be considered:</p>
+<ul class="Bl-bullet Bd-indent Bl-compact">
+  <li>As modules are sourced and executed inside the main
+      <a class="Xr" href="http://man.openbsd.org/ksh.1">ksh(1)</a>-based script,
+      they should not start with a shebang line
+    (<code class="Dv">#!...</code>).</li>
+  <li><code class="Nm">saltan</code> solely delivers the plain log message, i.e.
+      that part of the log entry following the sshd identifier indexed by the
+      process ID (e.g. <code class="Dv">sshd[69067]</code>).</li>
+  <li>A module must return 1 if it does not finds itself responsible for
+      handling the given log entry. If it finds itself responsible, on the other
+      hand, it should return 0 in order to make <code class="Nm">saltan</code>
+      stop searching for a match.</li>
+  <li>As modules are evaluated inside a function, new variables should be
+      declared <code class="Dv">local</code>.</li>
+  <li>The resulting
+      <a class="Lk" href="https://mpfr.github.io/pftbld/pftbld.8.html#MESSAGES">notification
+      message</a> must be provided by an <code class="Dv">echo</code> command
+      and has to always start with the client's IP address.</li>
+  <li>If there is no <code class="Dv">echo</code> command executed or the echoed
+      message is empty,
+      <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a> will not
+      be notified. This is perfectly legal.</li>
+  <li>Modules must be owned by <code class="Dv">root</code> to whom
+      &#x2018;<code class="Dv">w</code>&#x2019; permission is granted
+      exclusively. At the same time, &#x2018;<code class="Dv">x</code>&#x2019;
+      permissions must not be granted to anyone at all.</li>
+</ul>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="FILES"><a class="permalink" href="#FILES">FILES</a></h1>
+<dl class="Bl-tag Bl-compact">
+  <dt><span class="Pa">/etc/saltan/accept</span></dt>
+  <dd>The default <code class="Ic">acceptdir</code>.</dd>
+  <dt><span class="Pa">/etc/saltan/reject</span></dt>
+  <dd>The default <code class="Ic">rejectdir</code>.</dd>
+  <dt><span class="Pa">/etc/saltan/saltan.conf</span></dt>
+  <dd>The default <code class="Nm">saltan</code> configuration file.</dd>
+  <dt><span class="Pa">/usr/local/sbin/pftbld</span></dt>
+  <dd>The default path to the
+      <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a>
+    binary.</dd>
+  <dt><span class="Pa">/var/log/authlog</span></dt>
+  <dd>The default <a class="Xr" href="http://man.openbsd.org/sshd.8">sshd(8)</a>
+      authentication log file.</dd>
+</dl>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="SEE_ALSO"><a class="permalink" href="#SEE_ALSO">SEE
+  ALSO</a></h1>
+<p class="Pp"><a class="Xr" href="http://man.openbsd.org/ksh.1">ksh(1)</a>,
+    <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a>,
+    <a class="Xr" href="http://man.openbsd.org/sshd.8">sshd(8)</a></p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="HISTORY"><a class="permalink" href="#HISTORY">HISTORY</a></h1>
+<p class="Pp"><code class="Nm">saltan</code> first appeared on
+    <a class="Lk" href="https://github.com/mpfr/saltan/">GitHub</a> in May,
+    2021.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="AUTHORS"><a class="permalink" href="#AUTHORS">AUTHORS</a></h1>
+<p class="Pp"><code class="Nm">saltan</code> was written by
+    <span class="An">Matthias Pressfreund</span>.</p>
+</section>
+</div>
+<table class="foot">
+  <tr>
+    <td class="foot-date">May 23, 2021</td>
+    <td class="foot-os">OpenBSD</td>
+  </tr>
+</table>
+</body>
+</html>

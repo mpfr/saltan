@@ -1,0 +1,6 @@
+[[ $* = 'Connection closed by authenticating user '* ]] || return 1
+shift 5
+local user=$1
+shift
+echo "$1\nConnection closed by authenticating user ${user}"
+return 0

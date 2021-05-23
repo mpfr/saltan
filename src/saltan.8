@@ -1,0 +1,216 @@
+.\"
+.\" Copyright (c) 2021 Matthias Pressfreund
+.\"
+.\" Permission to use, copy, modify, and distribute this software for any
+.\" purpose with or without fee is hereby granted, provided that the above
+.\" copyright notice and this permission notice appear in all copies.
+.\"
+.\" THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+.\" WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+.\" MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+.\" ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+.\" WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+.\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+.\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+.\"
+.Dd $Mdocdate: May 23 2021 $
+.Dt SALTAN 8
+.Os
+.Sh NAME
+.Nm saltan
+.Nd
+.Sy s Ns No shd Sy a Ns No uthentication Sy l Ns No og Sy t Ns No race
+.Sy a Ns No nd Sy n Ns No otify for
+.Lk https://github.com/mpfr/pftbld pftbld(8)
+.Sh SYNOPSIS
+.Nm
+.Op Fl c Ar path
+.Sh DESCRIPTION
+.Nm
+monitors the
+.Xr sshd 8
+authentication log file and instantly notifies
+.Lk https://github.com/mpfr/pftbld pftbld(8)
+when it detects accepted and/or rejected authentication attempts.
+To this end, it follows an extendable modular approach and executes a
+configurable set of evaluation modules on each new entry in the authentication
+log file.
+.Pp
+The options are as follows:
+.Bl -tag -width Ds
+.It Fl c Ar path
+Specifies the
+.Ar path
+to an alternative
+.Nm
+configuration file.
+.El
+.Sh CONFIGURATION
+.Nm
+reads its configuration either from the default configuration file
+.Pa /etc/saltan/saltan.conf
+or from the path specified with the
+.Fl c
+command line option.
+.Pp
+The following configuration options are accepted:
+.Bl -tag -width Ds
+.It Ic logfile Ar path
+Specifies the
+.Ar path
+to the
+.Xr sshd 8
+authentication log file.
+Defaults to
+.Pa /var/log/authlog .
+.It Ic pftbld Ar path
+Specifies the
+.Ar path
+to the
+.Lk https://github.com/mpfr/pftbld pftbld(8)
+binary.
+Defaults to
+.Pa /usr/local/sbin/pftbld .
+.It Ic acceptsock | rejectsock Ar socket | Ic none
+Specifies the
+.Lk https://github.com/mpfr/pftbld pftbld(8)
+related UNIX-domain
+.Ar socket
+to be notified in the event of accepted/rejected authentication.
+Defaults to
+.Ic none ,
+which disables detection of corresponding authentication events.
+At least one
+.Ar socket
+needs to be defined to start
+.Nm .
+.It Ic acceptdir | rejectdir Ar path
+Specifies the
+.Ar path
+to an evaluation module family's home directory.
+Defaults to
+.Pa /etc/saltan/accept
+and
+.Pa /etc/saltan/reject ,
+respectively.
+.It Ic acceptmods | rejectmods Ar name ...
+Specifies a whitespace-separated list of module file names, located under
+.Ic acceptdir
+/
+.Ic rejectdir ,
+and executed in the order of appearance to detect authentication events.
+Modules are activated only if the corresponding
+.Ic acceptsock
+/
+.Ic rejectsock
+is specified as well.
+.El
+.Sh MODULES
+On startup,
+.Nm
+sources evaluation modules specified in the configuration file.
+Each module consists of a short
+.Xr ksh 1
+script snippets and serves the following purposes:
+.Bl -enum -offset indent -compact
+.It
+Detect whether a new entry in the
+.Xr sshd 8
+authentication log shall be considered a relevant authentication event and
+pass further treatment or if it should be simply ignored.
+.It
+Extract relevant information (e.g. the client's IP address) from the log entry
+message.
+.It
+Build and return the notification message
+.Nm
+should send to
+.Lk https://github.com/mpfr/pftbld pftbld(8) .
+.El
+.Pp
+.Nm
+includes a couple of ready-to-use modules providing base functionality and may
+be adapted for individual requirements or used as templates to handle other
+content.
+.Pp
+When modifying existing modules or writing new ones, the following aspects
+should be considered:
+.Bl -bullet -offset indent -compact
+.It
+As modules are sourced and executed inside the main
+.Xr ksh 1 Ns - Ns
+based script, they should not start with a shebang line
+.Pq Dv #!... .
+.It
+.Nm
+solely delivers the plain log message, i.e. that part of the log entry
+following the sshd identifier indexed by the process ID
+.Pq e.g. Dv sshd[69067] .
+.It
+A module must return 1 if it does not finds itself responsible for handling the
+given log entry.
+If it finds itself responsible, on the other hand, it should return 0 in order
+to make
+.Nm
+stop searching for a match.
+.It
+As modules are evaluated inside a function, new variables should be declared
+.Dv local .
+.It
+The resulting
+.Lk https://mpfr.github.io/pftbld/pftbld.8.html#MESSAGES notification message
+must be provided by an
+.Dv echo
+command and has to always start with the client's IP address.
+.It
+If there is no
+.Dv echo
+command executed or the echoed message is empty,
+.Lk https://github.com/mpfr/pftbld pftbld(8)
+will not be notified.
+This is perfectly legal.
+.It
+Modules must be owned by
+.Dv root
+to whom
+.Sq Dv w
+permission is granted exclusively.
+At the same time,
+.Sq Dv x
+permissions must not be granted to anyone at all.
+.El
+.Sh FILES
+.Bl -tag -width "/usr/local/sbin/pftbld" -compact
+.It Pa /etc/saltan/accept
+The default
+.Ic acceptdir .
+.It Pa /etc/saltan/reject
+The default
+.Ic rejectdir .
+.It Pa /etc/saltan/saltan.conf
+The default
+.Nm
+configuration file.
+.It Pa /usr/local/sbin/pftbld
+The default path to the
+.Lk https://github.com/mpfr/pftbld pftbld(8)
+binary.
+.It Pa /var/log/authlog
+The default
+.Xr sshd 8
+authentication log file.
+.El
+.Sh SEE ALSO
+.Xr ksh 1 ,
+.Lk https://github.com/mpfr/pftbld pftbld(8) ,
+.Xr sshd 8
+.Sh HISTORY
+.Nm
+first appeared on
+.Lk https://github.com/mpfr/saltan/ GitHub
+in May, 2021.
+.Sh AUTHORS
+.An -nosplit
+.Nm
+was written by
+.An Matthias Pressfreund .

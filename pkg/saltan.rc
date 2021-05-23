@@ -1,0 +1,14 @@
+#!/bin/ksh
+
+daemon="/bin/ksh /usr/local/sbin/saltan"
+
+. /etc/rc.d/rc.subr
+
+rc_bg=YES
+rc_reload=NO
+
+rc_stop() {
+	pkill -PIPE -T "${daemon_rtable}" -xf "${pexp}"
+}
+
+rc_cmd $1

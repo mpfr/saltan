@@ -1,0 +1,6 @@
+[[ $* = 'Disconnecting authenticating user '* ]] || return 1
+shift 3
+local user=$1
+shift
+echo "$1\nDisconnecting authenticating user ${user}"
+return 0

@@ -1,0 +1,10 @@
+[[ $* = 'Accepted '* ]] || return 1
+shift
+[[ $1 = 'password' || $1 = 'publickey' || $1 = 'hostbased' || $1 = 'none' || \
+    $1 = 'keyboard-interactive' || $1 = 'gssapi-with-mic' ]] || return 0
+local method=$1
+shift 2
+local user=$1
+shift 2
+echo "$1\nAccepted ${method} for user ${user}"
+return 0
