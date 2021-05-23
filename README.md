@@ -1,13 +1,13 @@
 # saltan(8)
 
-An [OpenBSD](https://www.openbsd.org) daemon monitoring the [sshd(8)](https://man.openbsd.org/sshd) authentication log file and notifying [pftbld(8)](https://github.com/mpfr/pftbld) on accepted and/or rejected authentication attempts.
+An [OpenBSD](https://www.openbsd.org) daemon monitoring the [sshd(8)](https://man.openbsd.org/sshd) authentication log file and notifying [pftbld(8)](https://github.com/mpfr/pftbld/tree/6.9-stable) on accepted and/or rejected authentication attempts.
 
-For further information, please have a look at the [manpage](https://mpfr.github.io/saltan/saltan.8.html).
+For further information, please have a look at the [manpage](https://mpfr.net/man/saltan/6.9-stable/saltan.8.html).
 
 ## How to install
 
-Make sure you're running `OpenBSD-current`. Otherwise, one of the following branches might be more appropriate:
-* [6.9-stable](https://github.com/mpfr/saltan/tree/6.9-stable)
+Make sure you're running `OpenBSD 6.9-stable`. Otherwise, one of the following branches might be more appropriate:
+* [current](https://github.com/mpfr/saltan)
 * [6.8-stable](https://github.com/mpfr/saltan/tree/6.8-stable)
 
 Make sure your user has sufficient `doas` permissions. To start, `cd` into the user's home directory, here `/home/mpfr`.
@@ -23,40 +23,40 @@ $ pwd
 Get the sources downloaded and extracted.
 
 ```
-$ rm -rf saltan-current/
-$ ftp -Vo - https://codeload.github.com/mpfr/saltan/tar.gz/current | tar xzvf -
-saltan-current
-saltan-current/LICENSE
-saltan-current/README.md
-saltan-current/docs
-saltan-current/docs/mandoc.css
-saltan-current/docs/saltan.8.html
-saltan-current/pkg
-saltan-current/pkg/saltan.conf
-saltan-current/pkg/saltan.rc
-saltan-current/pkg/accept
-saltan-current/pkg/accept/accepted
-saltan-current/pkg/reject
-saltan-current/pkg/reject/connection_closed_by_authenticating_user
-saltan-current/pkg/reject/disconnected_from_authenticating_user
-saltan-current/pkg/reject/disconnecting_authenticating_user
-saltan-current/pkg/reject/invalid_user
-saltan-current/pkg/reject/unable_to_negotiate
-saltan-current/src
-saltan-current/src/Makefile
-saltan-current/src/saltan.8
-saltan-current/src/saltan.sh
+$ rm -rf saltan-6.9-stable/
+$ ftp -Vo - https://codeload.github.com/mpfr/saltan/tar.gz/6.9-stable | tar xzvf -
+saltan-6.9-stable
+saltan-6.9-stable/LICENSE
+saltan-6.9-stable/README.md
+saltan-6.9-stable/docs
+saltan-6.9-stable/docs/mandoc.css
+saltan-6.9-stable/docs/saltan.8.html
+saltan-6.9-stable/pkg
+saltan-6.9-stable/pkg/saltan.conf
+saltan-6.9-stable/pkg/saltan.rc
+saltan-6.9-stable/pkg/accept
+saltan-6.9-stable/pkg/accept/accepted
+saltan-6.9-stable/pkg/reject
+saltan-6.9-stable/pkg/reject/connection_closed_by_authenticating_user
+saltan-6.9-stable/pkg/reject/disconnected_from_authenticating_user
+saltan-6.9-stable/pkg/reject/disconnecting_authenticating_user
+saltan-6.9-stable/pkg/reject/invalid_user
+saltan-6.9-stable/pkg/reject/unable_to_negotiate
+saltan-6.9-stable/src
+saltan-6.9-stable/src/Makefile
+saltan-6.9-stable/src/saltan.8
+saltan-6.9-stable/src/saltan.sh
 ```
 
 Install daemon, manpage, service script, modules and a sample configuration file.
 
 ```
-$ cd saltan-current/src
+$ cd saltan-6.9-stable/src
 $ doas make fullinstall
-install -c -o root -g bin -m 555  /home/mpfr/saltan-current/src/saltan.sh ...
+install -c -o root -g bin -m 555  /home/mpfr/saltan-6.9-stable/src/saltan.sh ...
 install -c -o root -g bin -m 444  saltan.8 /usr/local/man/man8/saltan.8 ...
-install -c -o root -g bin -m 555  /home/mpfr/saltan-current/src/../pkg/saltan...
-cp /root/saltan-current/src/../pkg/!(saltan.rc) /etc/saltan
+install -c -o root -g bin -m 555  /home/mpfr/saltan-6.9-stable/src/../pkg/saltan...
+cp /root/saltan-6.9-stable/src/../pkg/!(saltan.rc) /etc/saltan
 ```
 
 > For further usage, the following list of available installation targets might be helpful:
@@ -133,7 +133,7 @@ $ doas rcctl disable saltan
 Uninstall daemon, manpage and service script.
 
 ```
-$ cd ~/saltan-current/src
+$ cd ~/saltan-6.9-stable/src
 $ doas make uninstall
 rm /etc/rc.d/saltan /usr/local/man/man8/saltan.8 /usr/local/sbin/saltan
 (configuration has changes, not touching /etc/saltan)
@@ -142,5 +142,5 @@ rm /etc/rc.d/saltan /usr/local/man/man8/saltan.8 /usr/local/sbin/saltan
 Modules, configuration and source directory need to be removed manually, if no longer needed.
 
 ```
-$ doas rm -rf /etc/saltan ~/saltan-current
+$ doas rm -rf /etc/saltan ~/saltan-6.9-stable
 ```
