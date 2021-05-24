@@ -13,13 +13,13 @@
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
-.Dd $Mdocdate: May 23 2021 $
+.Dd $Mdocdate: May 24 2021 $
 .Dt SALTAN 8
 .Os
 .Sh NAME
 .Nm saltan
 .Nd
-.Sy s Ns No shd Sy a Ns No uthentication Sy l Ns No og Sy t Ns No race
+.Sy s Ns No shd Sy a Ns No uthentication Sy l Ns No og Sy t Ns No rack
 .Sy a Ns No nd Sy n Ns No otify for
 .Lk https://github.com/mpfr/pftbld pftbld(8)
 .Sh SYNOPSIS
@@ -73,17 +73,14 @@ Defaults to
 .Pa /usr/local/sbin/pftbld .
 .It Ic acceptsock | rejectsock Ar socket | Ic none
 Specifies the
-.Lk https://github.com/mpfr/pftbld pftbld(8)
+.Lk https://github.com/mpfr/pftbld pftbld(8) Ns - Ns
 related UNIX-domain
 .Ar socket
-to be notified in the event of accepted/rejected authentication.
+to be notified in the event of an accepted or rejected authentication attempt.
 Defaults to
-.Ic none ,
+.Ic none
 which disables detection of corresponding authentication events.
-At least one
-.Ar socket
-needs to be defined to start
-.Nm .
+At least one of the two options needs to be defined.
 .It Ic acceptdir | rejectdir Ar path
 Specifies the
 .Ar path
@@ -111,15 +108,15 @@ On startup,
 sources evaluation modules specified in the configuration file.
 Each module consists of a short
 .Xr ksh 1
-script snippets and serves the following purposes:
+script snippet that serves the following purposes:
 .Bl -enum -offset indent -compact
 .It
-Detect whether a new entry in the
+Determine whether a new entry in the
 .Xr sshd 8
-authentication log shall be considered a relevant authentication event and
-pass further treatment or if it should be simply ignored.
+authentication log will be considered a relevant authentication event, and will
+be treated further or should simply be ignored.
 .It
-Extract relevant information (e.g. the client's IP address) from the log entry
+Extract relevant information (e.g. the client's IP address) from the log
 message.
 .It
 Build and return the notification message
@@ -129,9 +126,9 @@ should send to
 .El
 .Pp
 .Nm
-includes a couple of ready-to-use modules providing base functionality and may
-be adapted for individual requirements or used as templates to handle other
-content.
+includes a set of ready-to-use modules providing base functionality which may
+be adapted for individual requirements or used as templates for new log message
+handlers.
 .Pp
 When modifying existing modules or writing new ones, the following aspects
 should be considered:
@@ -147,12 +144,11 @@ solely delivers the plain log message, i.e. that part of the log entry
 following the sshd identifier indexed by the process ID
 .Pq e.g. Dv sshd[69067] .
 .It
-A module must return 1 if it does not finds itself responsible for handling the
-given log entry.
-If it finds itself responsible, on the other hand, it should return 0 in order
-to make
+A module must return 1 as soon as it turns out it is not responsible for
+handling the given log message.
+On the other hand, if it is responsible, it should end up returning 0 so that
 .Nm
-stop searching for a match.
+stops looking for a match.
 .It
 As modules are evaluated inside a function, new variables should be declared
 .Dv local .
@@ -172,11 +168,11 @@ This is perfectly legal.
 .It
 Modules must be owned by
 .Dv root
-to whom
-.Sq Dv w
-permission is granted exclusively.
-At the same time,
-.Sq Dv x
+who is the only one granted write
+.Pq Sq Dv w
+permission.
+At the same time, execute
+.Pq Sq Dv x
 permissions must not be granted to anyone at all.
 .El
 .Sh FILES
