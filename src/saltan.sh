@@ -75,7 +75,7 @@ while read line; do
 	'acceptmods')	shift; ACCEPTMODS=$*;;
 	'rejectsock')	REJECTSOCK=$2;;
 	'rejectdir')	REJECTDIR=$2;;
-	'rejectmods')	shift; FAILMODS=$*;;
+	'rejectmods')	shift; REJECTMODS=$*;;
 	*)		err "invalid configuration parameter: $1"
 	esac
 done <${CONFFILE}
@@ -104,7 +104,7 @@ set -A modaccept
 	modaccept[((${#modaccept[@]}+1))]=$(cat ${ACCEPTDIR}/${mod})
 done
 set -A modreject
-[[ -n ${REJECTDIR} ]] && for mod in ${FAILMODS}; do
+[[ -n ${REJECTDIR} ]] && for mod in ${REJECTMODS}; do
 	check_module ${REJECTDIR}/${mod}
 	modreject[((${#modreject[@]}+1))]=$(cat ${REJECTDIR}/${mod})
 done
