@@ -10,20 +10,20 @@ Make sure you're running `OpenBSD-current`. Otherwise, one of the following bran
 * [6.9-stable](https://github.com/mpfr/saltan/tree/6.9-stable)
 * [6.8-stable](https://github.com/mpfr/saltan/tree/6.8-stable)
 
-Make sure your user has sufficient `doas` permissions. To start, `cd` into the user's home directory, here `/home/mpfr`.
+Then, make sure your user (e.g. `mpfr`) has sufficient `doas` permissions.
 
 ```
 $ cat /etc/doas.conf
 permit nopass mpfr
+```
+
+Download and extract the source files into the user's home directory, here `/home/mpfr`.
+
+```
 $ cd
 $ pwd
 /home/mpfr
-```
-
-Get the sources downloaded and extracted.
-
-```
-$ rm -rf saltan-current/
+$ doas rm -rf saltan-current/
 $ ftp -Vo - https://codeload.github.com/mpfr/saltan/tar.gz/current | tar xzvf -
 saltan-current
 saltan-current/LICENSE
@@ -32,8 +32,6 @@ saltan-current/docs
 saltan-current/docs/mandoc.css
 saltan-current/docs/saltan.8.html
 saltan-current/pkg
-saltan-current/pkg/saltan.conf
-saltan-current/pkg/saltan.rc
 saltan-current/pkg/accept
 saltan-current/pkg/accept/accepted
 saltan-current/pkg/reject
@@ -42,6 +40,8 @@ saltan-current/pkg/reject/disconnected_from_authenticating_user
 saltan-current/pkg/reject/disconnecting_authenticating_user
 saltan-current/pkg/reject/invalid_user
 saltan-current/pkg/reject/unable_to_negotiate
+saltan-current/pkg/saltan.conf
+saltan-current/pkg/saltan.rc
 saltan-current/src
 saltan-current/src/Makefile
 saltan-current/src/saltan.8
@@ -62,11 +62,12 @@ cp /root/saltan-current/src/../pkg/!(saltan.rc) /etc/saltan
 > For further usage, the following list of available installation targets might be helpful:
 > target name | description
 > ----------- | -----------
-> `fullinstall` | installs the daemon's binary, manpage and service script
+> `fullinstall` | installs the daemon's binary, manpage, service script, modules and a sample configuration file, if no other configuration file exists
 > `install` | installs the daemon's binary and manpage only
 > `reinstall` | runs `uninstall`, then `fullinstall`
 > `uninstall` | removes everything installed by `fullinstall`
 > `update` | installs binary and manpage, intended to be used when updating an existing installation
+> `modsupdate` | runs `update` with modules included
 
 Activate the service script and configure the notification sockets.
 
