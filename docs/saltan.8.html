@@ -121,22 +121,22 @@
 <h1 class="Sh" id="MODULES"><a class="permalink" href="#MODULES">MODULES</a></h1>
 <p class="Pp">On startup, <code class="Nm">saltan</code> sources evaluation
     modules specified in the configuration file. Each module consists of a short
-    <a class="Xr" href="http://man.openbsd.org/ksh.1">ksh(1)</a> script snippets
-    and serves the following purposes:</p>
+    <a class="Xr" href="http://man.openbsd.org/ksh.1">ksh(1)</a> script snippet
+    that serves the following purposes:</p>
 <ol class="Bl-enum Bd-indent Bl-compact">
-  <li>Detect whether a new entry in the
+  <li>Determine whether a new entry in the
       <a class="Xr" href="http://man.openbsd.org/sshd.8">sshd(8)</a>
-      authentication log shall be considered a relevant authentication event and
-      pass further treatment or if it should be simply ignored.</li>
+      authentication log will be considered a relevant authentication event, and
+      will be treated further or should simply be ignored.</li>
   <li>Extract relevant information (e.g. the client's IP address) from the log
-      entry message.</li>
+      message.</li>
   <li>Build and return the notification message <code class="Nm">saltan</code>
       should send to
       <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a>.</li>
 </ol>
 <p class="Pp"><code class="Nm">saltan</code> includes a set of ready-to-use
     modules providing base functionality which may be adapted for individual
-    requirements or used as templates to handle other content.</p>
+    requirements or used as templates for new log message handlers.</p>
 <p class="Pp">When modifying existing modules or writing new ones, the following
     aspects should be considered:</p>
 <ul class="Bl-bullet Bd-indent Bl-compact">
@@ -147,10 +147,10 @@
   <li><code class="Nm">saltan</code> solely delivers the plain log message, i.e.
       that part of the log entry following the sshd identifier indexed by the
       process ID (e.g. <code class="Dv">sshd[69067]</code>).</li>
-  <li>A module must return 1 if it does not finds itself responsible for
-      handling the given log entry. If it finds itself responsible, on the other
-      hand, it should return 0 in order to make <code class="Nm">saltan</code>
-      stop searching for a match.</li>
+  <li>A module must return 1 as soon as it turns out it is not responsible for
+      handling the given log message. On the other hand, if it is responsible,
+      it should end up returning 0 so that <code class="Nm">saltan</code> stops
+      looking for a match.</li>
   <li>As modules are evaluated inside a function, new variables should be
       declared <code class="Dv">local</code>.</li>
   <li>The resulting
@@ -161,9 +161,9 @@
       message is empty,
       <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a> will not
       be notified. This is perfectly legal.</li>
-  <li>Modules must be owned by <code class="Dv">root</code> to whom
-      &#x2018;<code class="Dv">w</code>&#x2019; permission is granted
-      exclusively. At the same time, &#x2018;<code class="Dv">x</code>&#x2019;
+  <li>Modules must be owned by <code class="Dv">root</code> who is the only one
+      granted write (&#x2018;<code class="Dv">w</code>&#x2019;) permission. At
+      the same time, execute (&#x2018;<code class="Dv">x</code>&#x2019;)
       permissions must not be granted to anyone at all.</li>
 </ul>
 </section>
@@ -206,7 +206,7 @@
 </div>
 <table class="foot">
   <tr>
-    <td class="foot-date">May 23, 2021</td>
+    <td class="foot-date">May 24, 2021</td>
     <td class="foot-os">OpenBSD</td>
   </tr>
 </table>
