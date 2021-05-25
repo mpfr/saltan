@@ -82,7 +82,7 @@ $ doas rcctl check pftbld
 pftbld(ok)
 ```
 
-Adapt the `saltan` and `pftbld` configuration files.
+Synchronize `saltan` and `pftbld` configuration files.
 
 `saltan.conf`
 
@@ -99,11 +99,7 @@ failsock	/var/run/pftbld-ssh.sock
 target "ssh" {
 	...
 	socket "/var/run/pftbld-ssh.sock"
-	idlemin 500
-	cascade {
-		keep states
-		...
-	}
+	...
 }
 ```
 
