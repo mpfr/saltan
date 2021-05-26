@@ -100,11 +100,13 @@ done <${CONFFILE}
 
 set -A modaccept
 [[ -n ${ACCEPTDIR} ]] && for mod in ${ACCEPTMODS}; do
+	[[ ${mod} = '__'* ]] && continue
 	check_module ${ACCEPTDIR}/${mod}
 	modaccept[((${#modaccept[@]}+1))]=$(cat ${ACCEPTDIR}/${mod})
 done
 set -A modreject
 [[ -n ${REJECTDIR} ]] && for mod in ${REJECTMODS}; do
+	[[ ${mod} = '__'* ]] && continue
 	check_module ${REJECTDIR}/${mod}
 	modreject[((${#modreject[@]}+1))]=$(cat ${REJECTDIR}/${mod})
 done

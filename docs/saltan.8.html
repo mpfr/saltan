@@ -112,9 +112,10 @@
   <dd>Specifies a whitespace-separated list of module file names, located under
       <code class="Ic">acceptdir</code> / <code class="Ic">rejectdir</code>, and
       executed in the order of appearance to detect authentication events.
-      Modules are activated only if the corresponding
-      <code class="Ic">acceptsock</code> / <code class="Ic">rejectsock</code> is
-      specified as well.</dd>
+      Module names starting with a double underscore are ignored (e.g.
+      <code class="Dv">__dummy_module_1</code>). Modules are activated only if
+      the corresponding <code class="Ic">acceptsock</code> /
+      <code class="Ic">rejectsock</code> is specified as well.</dd>
 </dl>
 </section>
 <section class="Sh">
@@ -206,7 +207,7 @@
 </div>
 <table class="foot">
   <tr>
-    <td class="foot-date">May 24, 2021</td>
+    <td class="foot-date">May 26, 2021</td>
     <td class="foot-os">OpenBSD</td>
   </tr>
 </table>

@@ -13,7 +13,7 @@
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
-.Dd $Mdocdate: May 24 2021 $
+.Dd $Mdocdate: May 26 2021 $
 .Dt SALTAN 8
 .Os
 .Sh NAME
@@ -96,6 +96,8 @@ Specifies a whitespace-separated list of module file names, located under
 /
 .Ic rejectdir ,
 and executed in the order of appearance to detect authentication events.
+Module names starting with a double underscore are ignored
+.Pq e.g. Dv __dummy_module_1 .
 Modules are activated only if the corresponding
 .Ic acceptsock
 /
