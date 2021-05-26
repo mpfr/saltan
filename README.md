@@ -55,19 +55,23 @@ $ cd saltan-6.9-stable/src
 $ doas make fullinstall
 install -c -o root -g bin -m 555  /home/mpfr/saltan-6.9-stable/src/saltan.sh ...
 install -c -o root -g bin -m 444  saltan.8 /usr/local/man/man8/saltan.8 ...
+mkdir -p /etc/saltan/{accept,reject}
+cp /root/saltan-6.9-stable/src/../pkg/accept/* /etc/saltan/accept
+cp /root/saltan-6.9-stable/src/../pkg/reject/* /etc/saltan/reject
 install -c -o root -g bin -m 555  /home/mpfr/saltan-6.9-stable/src/../pkg/saltan...
-cp /root/saltan-6.9-stable/src/../pkg/!(saltan.rc) /etc/saltan
+cp /root/saltan-6.9-stable/src/../pkg/saltan.conf /etc/saltan
 ```
 
 > For further usage, the following list of available installation targets might be helpful:
 > target name | description
 > ----------- | -----------
-> `fullinstall` | installs the daemon's binary, manpage, service script, modules and a sample configuration file, if no other configuration file exists
-> `install` | installs the daemon's binary and manpage only
-> `reinstall` | runs `uninstall`, then `fullinstall`
-> `uninstall` | removes everything installed by `fullinstall`
-> `update` | installs binary and manpage, intended to be used when updating an existing installation
-> `modsupdate` | runs `update` with modules included
+> `fullinstall` | installs daemon, manpage, service script, modules and a sample configuration file if a configuration file not yet exists
+> `fulluninstall` | deletes everything installed by `fullinstall` but ignores `/etc/saltan` if files have changed
+> `install` | installs daemon and manpage only
+> `modsupdate` | updates included modules to their latest version
+> `reinstall` | runs `fulluninstall`, then `fullinstall modsupdate`
+> `uninstall` | deletes daemon and manpage
+> `update` | runs `all fullinstall`
 
 Activate the service script and configure the notification sockets.
 
@@ -84,7 +88,7 @@ pftbld(ok)
 
 Synchronize `saltan` and `pftbld` configuration files.
 
-`saltan.conf`
+`saltan.conf`:
 
 ```
 ...
@@ -131,9 +135,10 @@ Uninstall daemon, manpage and service script.
 
 ```
 $ cd ~/saltan-6.9-stable/src
-$ doas make uninstall
-rm /etc/rc.d/saltan /usr/local/man/man8/saltan.8 /usr/local/sbin/saltan
-(configuration has changes, not touching /etc/saltan)
+$ doas make fulluninstall
+rm /usr/local/man/man8/saltan.8 /usr/local/sbin/saltan
+rm /etc/rc.d/saltan
+(not deleting /etc/saltan as files have changed)
 ```
 
 Modules, configuration and source directory need to be removed manually, if no longer needed.
