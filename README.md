@@ -29,7 +29,6 @@ saltan-6.8-stable
 saltan-6.8-stable/LICENSE
 saltan-6.8-stable/README.md
 saltan-6.8-stable/docs
-saltan-6.8-stable/docs/mandoc.css
 saltan-6.8-stable/docs/saltan.8.html
 saltan-6.8-stable/pkg
 saltan-6.8-stable/pkg/accept
