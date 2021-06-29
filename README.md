@@ -2,7 +2,7 @@
 
 An [OpenBSD](https://www.openbsd.org) daemon monitoring the [sshd(8)](https://man.openbsd.org/sshd) authentication log file and notifying [pftbld(8)](https://github.com/mpfr/pftbld) on accepted and/or rejected authentication attempts.
 
-For further information, please have a look at the [manpage](https://mpfr.github.io/saltan/saltan.8.html).
+For further information, please have a look at the [manpage](https://mpfr.net/man/saltan/current/saltan.8.html).
 
 ## How to install
 
@@ -29,7 +29,6 @@ saltan-current
 saltan-current/LICENSE
 saltan-current/README.md
 saltan-current/docs
-saltan-current/docs/mandoc.css
 saltan-current/docs/saltan.8.html
 saltan-current/pkg
 saltan-current/pkg/accept
