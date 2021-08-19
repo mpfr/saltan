@@ -1,3 +1,6 @@
+| :warning: With the release of OpenBSD version 7.0, this branch will reach its end of life and will no longer be maintained.
+| --- |
+
 # saltan(8)
 
 An [OpenBSD](https://www.openbsd.org) daemon monitoring the [sshd(8)](https://man.openbsd.org/sshd) authentication log file and notifying [pftbld(8)](https://github.com/mpfr/pftbld/tree/6.8-stable) on accepted and/or rejected authentication attempts.
