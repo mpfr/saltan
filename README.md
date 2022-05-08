@@ -92,7 +92,7 @@ Synchronize `saltan` and `pftbld` configuration files.
 ```
 ...
 #acceptsock	none
-failsock	/var/run/pftbld-ssh.sock
+rejectsock	/var/run/pftbld-ssh.sock
 ...
 ```
 
