@@ -34,6 +34,7 @@ saltan-current/pkg
 saltan-current/pkg/accept
 saltan-current/pkg/accept/accepted
 saltan-current/pkg/reject
+saltan-current/pkg/reject/banner_exchange_invalid_format
 saltan-current/pkg/reject/connection_closed_by_authenticating_user
 saltan-current/pkg/reject/disconnected_from_authenticating_user
 saltan-current/pkg/reject/disconnecting_authenticating_user

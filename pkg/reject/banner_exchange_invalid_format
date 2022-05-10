@@ -1,0 +1,4 @@
+[[ $* = 'banner exchange: Connection from '*' invalid format' ]] || return 1
+shift 4
+echo "$1\nInvalid banner exchange format"
+return 0
