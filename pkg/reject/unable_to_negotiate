@@ -1,6 +1,11 @@
-[[ $* = 'Unable to negotiate with '*' no matching key exchange method found.'* ]] || return 1
+[[ $* = 'Unable to negotiate with '* ]] || return 1
 shift 4
 local addr=$1
-shift 9
-echo "${addr}\nNo matching key exchange method found\n$1 $2 $3"
+shift 3
+local msg
+while :; do
+	msg="${msg} $1"
+	[[ $1 = *'.' ]] && break || shift
+done
+echo "${addr}\nUnable to negotiate:${msg}\n$2 $3 $4"
 return 0
