@@ -1,0 +1,6 @@
+[[ $* = 'banner exchange: Connection from '* ]] || return 1
+shift 4
+local addr=$1
+shift 3
+echo "${addr}\nBanner exchange: $*"
+return 0
