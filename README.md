@@ -8,7 +8,7 @@ For further information, please have a look at the [manpage](https://mpfr.net/ma
 
 Make sure you're running `OpenBSD 7.1-stable`. Otherwise, one of the following branches might be more appropriate:
 * [current](https://github.com/mpfr/saltan)
-* [7.0-stable](https://github.com/mpfr/saltan/tree/7.0-stable)
+* [7.2-stable](https://github.com/mpfr/saltan/tree/7.2-stable)
 
 Then, make sure your user (e.g. `mpfr`) has sufficient `doas` permissions.
 
