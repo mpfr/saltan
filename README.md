@@ -7,8 +7,8 @@ For further information, please have a look at the [manpage](https://mpfr.net/ma
 ## How to install
 
 Make sure you're running `OpenBSD-current`. Otherwise, one of the following branches might be more appropriate:
+* [7.3-stable](https://github.com/mpfr/saltan/tree/7.3-stable)
 * [7.2-stable](https://github.com/mpfr/saltan/tree/7.2-stable)
-* [7.1-stable](https://github.com/mpfr/saltan/tree/7.1-stable)
 
 Then, make sure your user (e.g. `mpfr`) has sufficient `doas` permissions.
 
@@ -34,7 +34,7 @@ saltan-current/pkg
 saltan-current/pkg/accept
 saltan-current/pkg/accept/accepted
 saltan-current/pkg/reject
-saltan-current/pkg/reject/banner_exchange_invalid_format
+saltan-current/pkg/reject/banner_exchange
 saltan-current/pkg/reject/connection_closed_by_authenticating_user
 saltan-current/pkg/reject/disconnected_from_authenticating_user
 saltan-current/pkg/reject/disconnecting_authenticating_user
