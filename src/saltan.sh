@@ -1,6 +1,6 @@
 #!/bin/ksh
 #
-# Copyright (c) 2021 Matthias Pressfreund
+# Copyright (c) 2021, 2025 Matthias Pressfreund
 #
 # Permission to use, copy, modify, and distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
@@ -114,7 +114,7 @@ done
 tail -n0 -f ${LOGFILE} | while read -r line; do
 	set -- ${line}
 	shift 4
-	[[ $1 = 'sshd['* ]] || continue
+	[[ $1 = 'sshd-session['* ]] || continue
 	shift
 	ret=1
 	[[ -S ${REJECTSOCK} ]] && for mod in "${modreject[@]}"; do
