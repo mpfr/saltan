@@ -39,7 +39,7 @@ check_module()
 notify_send()
 {
 	[[ -x ${PFTBLD} ]] || return
-	echo -n "$2" | ${PFTBLD} -p $1 1>/dev/null
+	echo -n "$2" | ${PFTBLD} -p $1 >/dev/null
 }
 
 run_module()
@@ -114,7 +114,8 @@ done
 tail -n0 -f ${LOGFILE} | while read -r line; do
 	set -- ${line}
 	shift 4
-	[[ $1 = 'sshd-session['* ]] || continue
+	[[ $1 = 'sshd-session['* || $1 = 'sshd-auth['* || $1 = 'sshd['* ]] || \
+	    continue
 	shift
 	ret=1
 	[[ -S ${REJECTSOCK} ]] && for mod in "${modreject[@]}"; do
