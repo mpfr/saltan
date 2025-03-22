@@ -1,5 +1,5 @@
 .\"
-.\" Copyright (c) 2021 Matthias Pressfreund
+.\" Copyright (c) 2021, 2025 Matthias Pressfreund
 .\"
 .\" Permission to use, copy, modify, and distribute this software for any
 .\" purpose with or without fee is hereby granted, provided that the above
@@ -13,7 +13,7 @@
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
-.Dd $Mdocdate: May 26 2021 $
+.Dd $Mdocdate: March 22 2025 $
 .Dt SALTAN 8
 .Os
 .Sh NAME
@@ -21,7 +21,7 @@
 .Nd
 .Sy s Ns No shd Sy a Ns No uthentication Sy l Ns No og Sy t Ns No rack
 .Sy a Ns No nd Sy n Ns No otify for
-.Lk https://github.com/mpfr/pftbld pftbld(8)
+.Lk https://mpfr.net/man/pftbld/current/pftbld.8.html pftbld(8)
 .Sh SYNOPSIS
 .Nm
 .Op Fl c Ar path
@@ -30,7 +30,7 @@
 monitors the
 .Xr sshd 8
 authentication log file and instantly notifies
-.Lk https://github.com/mpfr/pftbld pftbld(8)
+.Lk https://mpfr.net/man/pftbld/current/pftbld.8.html pftbld(8)
 when it detects accepted and/or rejected authentication attempts.
 To this end, it follows an extendable modular approach and executes a
 configurable set of evaluation modules on each new entry in the authentication
@@ -67,13 +67,13 @@ Defaults to
 Specifies the
 .Ar path
 to the
-.Lk https://github.com/mpfr/pftbld pftbld(8)
+.Lk https://mpfr.net/man/pftbld/current/pftbld.8.html pftbld(8)
 binary.
 Defaults to
 .Pa /usr/local/sbin/pftbld .
 .It Ic acceptsock | rejectsock Ar socket | Ic none
 Specifies the
-.Lk https://github.com/mpfr/pftbld pftbld(8) Ns - Ns
+.Lk https://mpfr.net/man/pftbld/current/pftbld.8.html pftbld(8) Ns - Ns
 related UNIX-domain
 .Ar socket
 to be notified in the event of an accepted or rejected authentication attempt.
@@ -124,7 +124,7 @@ message.
 Build and return the notification message
 .Nm
 should send to
-.Lk https://github.com/mpfr/pftbld pftbld(8) .
+.Lk https://mpfr.net/man/pftbld/current/pftbld.8.html pftbld(8) .
 .El
 .Pp
 .Nm
@@ -144,7 +144,7 @@ based script, they should not start with a shebang line
 .Nm
 solely delivers the plain log message, i.e. that part of the log entry
 following the sshd identifier indexed by the process ID
-.Pq e.g. Dv sshd[69067] .
+.Pq e.g. Dv sshd-session[69067] .
 .It
 A module must return 1 as soon as it turns out it is not responsible for
 handling the given log message.
@@ -156,15 +156,15 @@ As modules are evaluated inside a function, new variables should be declared
 .Dv local .
 .It
 The resulting
-.Lk https://mpfr.github.io/pftbld/pftbld.8.html#MESSAGES notification message
-must be provided by an
+.Lk https://mpfr.net/man/pftbld/current/pftbld.8.html#MESSAGES notification
+message must be provided by an
 .Dv echo
 command and has to always start with the client's IP address.
 .It
 If there is no
 .Dv echo
 command executed or the echoed message is empty,
-.Lk https://github.com/mpfr/pftbld pftbld(8)
+.Lk https://mpfr.net/man/pftbld/current/pftbld.8.html pftbld(8)
 will not be notified.
 This is perfectly legal.
 .It
@@ -191,7 +191,7 @@ The default
 configuration file.
 .It Pa /usr/local/sbin/pftbld
 The default path to the
-.Lk https://github.com/mpfr/pftbld pftbld(8)
+.Lk https://mpfr.net/man/pftbld/current/pftbld.8.html pftbld(8)
 binary.
 .It Pa /var/log/authlog
 The default
@@ -200,7 +200,8 @@ authentication log file.
 .El
 .Sh SEE ALSO
 .Xr ksh 1 ,
-.Lk https://github.com/mpfr/pftbld pftbld(8) ,
+.Lk https://mpfr.net/man/pftbld/current/pftbld.8.html pftbld(8) ,
+.Lk https://mpfr.net/man/pftbld/current/pftbld.conf.5.html pftbld.conf(5) ,
 .Xr sshd 8
 .Sh HISTORY
 .Nm

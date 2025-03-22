@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <!-- This is an automatically generated file.  Do not edit.
-   Copyright (c) 2021 Matthias Pressfreund
+   Copyright (c) 2021, 2025 Matthias Pressfreund
   
    Permission to use, copy, modify, and distribute this software for any
    purpose with or without fee is hereby granted, provided that the above
@@ -39,7 +39,7 @@
     <b class="Sy">a</b><span class="No">nd</span>
     <a class="permalink" href="#n"><b class="Sy" id="n">n</b></a><span class="No">otify
     for</span>
-    <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a></span></p>
+    <a class="Lk" href="https://mpfr.net/man/pftbld/current/pftbld.8.html">pftbld(8)</a></span></p>
 </section>
 <section class="Sh">
 <h1 class="Sh" id="SYNOPSIS"><a class="permalink" href="#SYNOPSIS">SYNOPSIS</a></h1>
@@ -55,7 +55,7 @@
 <p class="Pp"><code class="Nm">saltan</code> monitors the
     <a class="Xr" href="http://man.openbsd.org/sshd.8">sshd(8)</a>
     authentication log file and instantly notifies
-    <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a> when it
+    <a class="Lk" href="https://mpfr.net/man/pftbld/current/pftbld.8.html">pftbld(8)</a> when it
     detects accepted and/or rejected authentication attempts. To this end, it
     follows an extendable modular approach and executes a configurable set of
     evaluation modules on each new entry in the authentication log file.</p>
@@ -84,7 +84,7 @@
   <dt id="pftbld"><a class="permalink" href="#pftbld"><code class="Ic">pftbld</code></a>
     <var class="Ar">path</var></dt>
   <dd>Specifies the <var class="Ar">path</var> to the
-      <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a> binary.
+      <a class="Lk" href="https://mpfr.net/man/pftbld/current/pftbld.8.html">pftbld(8)</a> binary.
       Defaults to <span class="Pa">/usr/local/sbin/pftbld</span>.</dd>
   <dt id="acceptsock"><a class="permalink" href="#acceptsock"><code class="Ic">acceptsock</code></a>
     |
@@ -92,7 +92,7 @@
     <var class="Ar">socket</var> |
     <a class="permalink" href="#none"><code class="Ic" id="none">none</code></a></dt>
   <dd>Specifies the
-      <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a>-related
+      <a class="Lk" href="https://mpfr.net/man/pftbld/current/pftbld.8.html">pftbld(8)</a>-related
       UNIX-domain <var class="Ar">socket</var> to be notified in the event of an
       accepted or rejected authentication attempt. Defaults to
       <code class="Ic">none</code> which disables detection of corresponding
@@ -133,7 +133,7 @@
       message.</li>
   <li>Build and return the notification message <code class="Nm">saltan</code>
       should send to
-      <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a>.</li>
+      <a class="Lk" href="https://mpfr.net/man/pftbld/current/pftbld.8.html">pftbld(8)</a>.</li>
 </ol>
 <p class="Pp"><code class="Nm">saltan</code> includes a set of ready-to-use
     modules providing base functionality which may be adapted for individual
@@ -147,7 +147,7 @@
     (<code class="Dv">#!...</code>).</li>
   <li><code class="Nm">saltan</code> solely delivers the plain log message, i.e.
       that part of the log entry following the sshd identifier indexed by the
-      process ID (e.g. <code class="Dv">sshd[69067]</code>).</li>
+      process ID (e.g. <code class="Dv">sshd-session[69067]</code>).</li>
   <li>A module must return 1 as soon as it turns out it is not responsible for
       handling the given log message. On the other hand, if it is responsible,
       it should end up returning 0 so that <code class="Nm">saltan</code> stops
@@ -155,12 +155,12 @@
   <li>As modules are evaluated inside a function, new variables should be
       declared <code class="Dv">local</code>.</li>
   <li>The resulting
-      <a class="Lk" href="https://mpfr.github.io/pftbld/pftbld.8.html#MESSAGES">notification
+      <a class="Lk" href="https://mpfr.net/man/pftbld/current/pftbld.8.html#MESSAGES">notification
       message</a> must be provided by an <code class="Dv">echo</code> command
       and has to always start with the client's IP address.</li>
   <li>If there is no <code class="Dv">echo</code> command executed or the echoed
       message is empty,
-      <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a> will not
+      <a class="Lk" href="https://mpfr.net/man/pftbld/current/pftbld.8.html">pftbld(8)</a> will not
       be notified. This is perfectly legal.</li>
   <li>Modules must be owned by <code class="Dv">root</code> who is the only one
       granted write (&#x2018;<code class="Dv">w</code>&#x2019;) permission. At
@@ -179,7 +179,7 @@
   <dd>The default <code class="Nm">saltan</code> configuration file.</dd>
   <dt><span class="Pa">/usr/local/sbin/pftbld</span></dt>
   <dd>The default path to the
-      <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a>
+      <a class="Lk" href="https://mpfr.net/man/pftbld/current/pftbld.8.html">pftbld(8)</a>
     binary.</dd>
   <dt><span class="Pa">/var/log/authlog</span></dt>
   <dd>The default <a class="Xr" href="http://man.openbsd.org/sshd.8">sshd(8)</a>
@@ -190,7 +190,8 @@
 <h1 class="Sh" id="SEE_ALSO"><a class="permalink" href="#SEE_ALSO">SEE
   ALSO</a></h1>
 <p class="Pp"><a class="Xr" href="http://man.openbsd.org/ksh.1">ksh(1)</a>,
-    <a class="Lk" href="https://github.com/mpfr/pftbld">pftbld(8)</a>,
+    <a class="Lk" href="https://mpfr.net/man/pftbld/current/pftbld.8.html">pftbld(8)</a>,
+    <a class="Lk" href="https://mpfr.net/man/pftbld/current/pftbld.conf.5.html">pftbld.conf(5)</a>,
     <a class="Xr" href="http://man.openbsd.org/sshd.8">sshd(8)</a></p>
 </section>
 <section class="Sh">
@@ -207,7 +208,7 @@
 </div>
 <table class="foot">
   <tr>
-    <td class="foot-date">May 26, 2021</td>
+    <td class="foot-date">March 22, 2025</td>
     <td class="foot-os">OpenBSD</td>
   </tr>
 </table>
