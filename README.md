@@ -7,8 +7,8 @@ For further information, please have a look at the [manpage](https://mpfr.net/ma
 ## How to install
 
 Make sure you're running `OpenBSD-current`. Otherwise, one of the following branches might be more appropriate:
+* [8.0-stable](https://github.com/mpfr/saltan/tree/8.0-stable)
 * [7.9-stable](https://github.com/mpfr/saltan/tree/7.9-stable)
-* [7.8-stable](https://github.com/mpfr/saltan/tree/7.8-stable)
 
 Then, make sure your user (e.g. `mpfr`) has sufficient `doas` permissions.
 
